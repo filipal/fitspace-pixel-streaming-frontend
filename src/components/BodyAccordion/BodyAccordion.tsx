@@ -78,6 +78,28 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
     ? (scrollIndex / maxScroll) * (trackH - fillH)
     : 0
 
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const onTrackStart = (clientY: number) => {
+    if (!maxScroll) return
+    const track = trackRef.current
+    if (!track) return
+    const rect = track.getBoundingClientRect()
+    draggingRef.current = true
+    const update = (y: number) => {
+      const rel = y - rect.top
+      const pct = clamp(rel / trackH, 0, 1)
+      setScrollIndex(Math.round(pct * maxScroll))
+    }
+    update(clientY)
+    const move = (e: PointerEvent) => update(e.clientY)
+    const up = () => {
+      window.removeEventListener('pointermove', move)
+      window.removeEventListener('pointerup', up)
+      draggingRef.current = false
+    }
+    window.addEventListener('pointermove', move)
+    window.addEventListener('pointerup', up)
+  }
   // Slider row component
   // Funkcije za skaliranje slider vrijednosti
 
@@ -179,9 +201,20 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
             ))}
           </div>
         </div>
-        <div className={styles.vTrack}>
+        <div
+          className={styles.vTrack}
+          ref={trackRef}
+          onPointerDown={(e) => onTrackStart(e.clientY)}
+        >
           <div className={styles.vBar} />
-          <div className={styles.vFill} style={{ top: `${fillTop}px`, height: `${fillH}px` }} />
+          <div
+            className={styles.vFill}
+            style={{ top: `${fillTop}px`, height: `${fillH}px` }}
+            onPointerDown={(e) => {
+              e.stopPropagation()
+              onTrackStart(e.clientY)
+            }}
+          />
         </div>
       </div>
     </div>
