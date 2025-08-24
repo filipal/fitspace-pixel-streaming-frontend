@@ -184,9 +184,6 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
           <div className={`${styles.item} ${styles.lower}`} title={at(1).label}>{at(1).label}</div>
           <div className={`${styles.item} ${styles.bottomSmall}`} title={at(2).label}>{at(2).label}</div>
         </div>
-
-        <div className={styles.spacer} />
-
         <button type="button" className={`${styles.arrowBtn} ${styles.arrowDown}`} onClick={handleDown} aria-label="Next">
           <img src={ArrowRight} alt="Down" />
         </button>
