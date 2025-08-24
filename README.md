@@ -2,6 +2,10 @@
 
 npm install vite-plugin-svgr --save-dev
 npm install react-router-dom @types/react-router-dom
+npm install classnames
+npm install --save-dev @types/classnames
+npm install --save-dev sass-embedded
+
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
