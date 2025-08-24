@@ -99,7 +99,11 @@ export default function UnrealMeasurements() {
   ]
 
   const avatarImage = selectedNav === 'Body' ? unrealFBBodyButton : avatarSrc
-  
+
+  const updateMorph = (morphId: number, morphName: string, value: number) => {
+    console.log('updateMorph', { morphId, morphName, value })
+  }
+
   return (
     <div className={styles.page}>
       <Header
@@ -143,7 +147,7 @@ export default function UnrealMeasurements() {
 
         {selectedNav === 'Body' && (
           <div className={styles.accordion}>
-            <BodyAccordion />
+            <BodyAccordion updateMorph={updateMorph} />
           </div>
         )}
 

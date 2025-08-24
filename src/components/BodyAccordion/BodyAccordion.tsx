@@ -5,7 +5,12 @@ import type { MorphAttribute } from '../../data/morphAttributes';
 import styles from './BodyAccordion.module.scss'
 
 
-export default function BodyAccordion() {
+export interface BodyAccordionProps {
+  updateMorph?: (morphId: number, morphName: string, value: number) => void
+}
+
+
+export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
   // Categories grouped for body editing; values wiring will come later
   const categories = useMemo(
     () => [
@@ -77,8 +82,12 @@ export default function BodyAccordion() {
   // Funkcije za skaliranje slider vrijednosti
 
   function morphValueToSlider(value: number, min: number, max: number): number {
-    if (max === min) return 0;
-    return clamp(((value - min) / (max - min)) * 100, 0, 100);
+    if (max === min) return 0
+    return clamp(((value - min) / (max - min)) * 100, 0, 100)
+  }
+
+  function sliderToMorphValue(pct: number, min: number, max: number): number {
+    return min + (pct / 100) * (max - min)
   }
 
 
@@ -97,13 +106,16 @@ export default function BodyAccordion() {
       const rect = bar.getBoundingClientRect();
       draggingRef.current = true;
       const update = (x: number) => {
-        const rel = x - rect.left;
-        const width = rect.width;
-        const pct = clamp(Math.round((rel / width) * 100), 0, 100);
-        setVal(pct);
-        // Ovdje možeš ažurirati morph vrijednost u state/global store/pozvati callback
-        // npr. updateMorph(attr.morphId, sliderToMorphValue(pct, attr.min, attr.max))
-      };
+        const rel = x - rect.left
+        const width = rect.width
+        const pct = clamp(Math.round((rel / width) * 100), 0, 100)
+        setVal(pct)
+        updateMorph?.(
+          attr.morphId,
+          attr.morphName,
+          sliderToMorphValue(pct, attr.min, attr.max)
+        )
+      }
       update(clientX);
       const move = (e: PointerEvent) => update(e.clientX);
       const up = () => {
