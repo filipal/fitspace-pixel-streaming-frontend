@@ -16,13 +16,13 @@
   align-items: start;
   box-sizing: border-box;
   color: #000; /* default dark color */
-  background: #ececec;
+  background: transparent;
 }
 
 /* Svijetla pozadina kad je header u expandedTop ili expandedBot stanju */
 .appHeader.expandedTop,
 .appHeader.expandedBot {
-  background: #ececec !important;
+  background: transparent !important;
 }
 
 .light {

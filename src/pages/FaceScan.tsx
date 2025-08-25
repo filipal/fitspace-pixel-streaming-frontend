@@ -217,14 +217,14 @@ export default function FaceScan({ onClose }: { onClose?: () => void }) {
   }
 
   return (
-    <div className={styles.faceScanPage}>
-      {scanPhase === 'initial' && (
-        <img
-          src={placeholderImage}
-          alt={orientation === 'front' ? 'Front face' : 'Side face'}
-          className={styles.scanImage}
-        />
-      )}
+    <div
+      className={styles.faceScanPage}
+      style={
+        scanPhase === 'initial'
+          ? { backgroundImage: `url(${placeholderImage})` }
+          : undefined
+      }
+    >
       <video ref={videoRef} className={styles.video} autoPlay playsInline />
       {scanPhase !== 'initial' && (
         <div className={styles.overlay}>
