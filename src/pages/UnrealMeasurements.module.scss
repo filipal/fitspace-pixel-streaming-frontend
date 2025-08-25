@@ -12,9 +12,17 @@
 }
 
 .centralWrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.dataPanelWrapper {
+  position: absolute;
+  top: 10px;
+  left: calc(50% - 205px);
+  z-index: 1;
 }
 
 .avatarSection {
@@ -284,4 +292,97 @@
   align-items: center;
   justify-content: center;
   order: 3; // Stavlja label na dno
+}
+
+@media (min-width: 1440px) {
+  .page {
+    width: 100%;          /* umjesto fiksnog width:1440px (opcija: zadrži ako želiš striktno) */
+    max-width: 1440px;
+    min-height: 1024px;
+    align-items: flex-start;
+    background: #B1B1B0;
+    position: relative;
+  }
+
+  .centralWrapper {
+    flex-direction: row;
+    align-items: flex-start;
+    width: calc(100% - 90px);
+    /* min-height ostaje da može rasti s contentom */
+    min-height: calc(1024px - 70px);
+    justify-content: flex-start;
+    padding-left: 20px;
+  }
+
+  .avatarSection {
+    width: 604px;
+    height: 953px;
+  }
+
+  .bodySelected {
+    height: 953px;
+    justify-content: center;
+  }
+
+  .bodySelected::before {
+    display: none;
+  }
+
+  .bodySelected .avatarImage {
+    width: 100%;
+    height: 100%;
+  }
+
+  .dataPanelWrapper {
+    position: static;
+    width: 273px;
+    height: 752px;
+    margin-left: 20px;
+  }
+
+  .accordion {
+    width: 335px;
+    height: 100%;
+    margin-left: 20px;
+  }
+
+  .bottomSection {
+    position: absolute;
+    top: 70px;
+    right: 0;
+    width: 90px;
+    /* height: calc(100% - 70px);  // uklonjeno da ne ovisi o eventualno limitiranom parentu */
+    min-height: calc(1024px - 70px);
+    border-top: none;
+    border-left: 1px solid #000;
+    margin-bottom: 0;
+    padding-top: 20px;
+    justify-content: flex-start;
+  }
+
+  .bottomSection::after {
+    display: none;
+  }
+
+  .bottomNav {
+    width: 90px;
+    height: 639px;
+    flex-direction: column;
+    margin-top: 0;
+    align-items: center;
+  }
+
+  .navButton {
+    width: 90px;
+    height: 90px;
+  }
+
+  .navButton:not(:first-child) {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+}
+
+@media (min-width: 1024px) {
+  
 }

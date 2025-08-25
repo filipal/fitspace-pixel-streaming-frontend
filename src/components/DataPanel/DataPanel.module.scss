@@ -86,3 +86,14 @@
   text-align: right;
 }
 
+
+@media (min-width: 1440px) {
+  .dataPanel {
+    width: 100%;
+    height: 100%;
+  }
+
+  .dataPanelContent {
+    height: calc(100% - 24px);
+  }
+}

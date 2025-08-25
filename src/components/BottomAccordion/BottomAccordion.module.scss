@@ -85,3 +85,28 @@
   white-space: nowrap;
   padding: 0 4px;
 }
+
+
+@media (min-width: 1440px) {
+  .container {
+    width: 335px;
+    height: 100%;
+  }
+
+  .left {
+    height: 100%;
+  }
+
+  .right {
+    width: calc(100% - 80px);
+    height: 100%;
+  }
+
+  .rightInner {
+    width: calc(100% - 20px);
+    height: 100%;
+  }
+
+  .arrowUp img { transform: rotate(180deg); }
+  .arrowDown img { transform: rotate(0deg); }
+}

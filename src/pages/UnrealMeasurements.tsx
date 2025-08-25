@@ -130,12 +130,10 @@ export default function UnrealMeasurements() {
       />
 
       <div className={styles.centralWrapper}>
-  <div className={`${styles.avatarSection} ${selectedNav === 'Body' ? styles.bodySelected : ''} ${selectedNav === 'Face' ? styles.faceSelected : ''} ${selectedNav === 'Skin' ? styles.skinSelected : ''} ${selectedNav === 'Hair' ? styles.hairSelected : ''} ${selectedNav === 'Extras' ? styles.extrasSelected : ''}`}>
+        <div className={`${styles.avatarSection} ${selectedNav === 'Body' ? styles.bodySelected : ''} ${selectedNav === 'Face' ? styles.faceSelected : ''} ${selectedNav === 'Skin' ? styles.skinSelected : ''} ${selectedNav === 'Hair' ? styles.hairSelected : ''} ${selectedNav === 'Extras' ? styles.extrasSelected : ''}`}>
           <img src={avatarImage} alt="Avatar" className={styles.avatarImage} />
 
-          {selectedNav === 'Body' && (
-            <DataPanel title="Body Measurements (cm)" measurements={measurements} />
-          )}
+          {/* Body measurements panel positioned separately */}
 
           {/* Body accordion renders below in centralWrapper to preserve position */}
 
@@ -156,6 +154,12 @@ export default function UnrealMeasurements() {
             ))}
           </div>
         </div>
+
+        {selectedNav === 'Body' && (
+          <div className={styles.dataPanelWrapper}>
+            <DataPanel title="Body Measurements (cm)" measurements={measurements} />
+          </div>
+        )}
 
         {selectedNav === 'Body' && (
           <div className={styles.accordion}>
