@@ -21,6 +21,20 @@
     align-items: center;
     justify-content: center;
   }
+  .toneBarGroup {
+    width: 350px; /* nova širina samo u expandedRight */
+    height: 25px;
+  }
+
+  .toneBar {
+    width: 350px; /* usklađeno s toneBarGroup */
+    height: 10px;
+  }
+
+  .frames {
+    width: 363px; /* prilagodi: toneBarGroup + eventualni okviri (13px) */
+    grid-template-columns: 13px 1fr 13px;
+  }  
 }
 
 .left {

@@ -1,6 +1,7 @@
 .loadingScreenPage {
   position: relative;
-  width: 100vw;
+  width: 100%;
+  max-width: 430px;
   height: 100vh;
   background: #f0f0f0; /* Svijetlo siva pozadina kao na slici */
   display: flex;
@@ -8,6 +9,7 @@
   align-items: center;
   justify-content: center;
   font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
 }
 
 .exitButton {

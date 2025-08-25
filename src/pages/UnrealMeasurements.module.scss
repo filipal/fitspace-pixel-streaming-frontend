@@ -200,7 +200,8 @@
 }
 
 .bottomSection {
-  width: 100vw; // Puna širina ekrana
+  width: 100%; // Puna širina ekrana
+  max-width: 430px;
   border-top: 1px solid #000; // Border od ruba do ruba
   display: flex;
   justify-content: center; // Centrira bottomNav
@@ -208,6 +209,7 @@
   padding-top: 0; // Uklanja padding da border bude flush
   background: #ececec;
   position: relative;
+  overflow-x: hidden;
 }
 
 .bottomSection::after {
