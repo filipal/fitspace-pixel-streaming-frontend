@@ -28,14 +28,14 @@ export default function FaceScanInfo() {
             </div>
           ))}
         </div>
-        <Footer
-          backText="Back"
-          actionText="Start Scanning"
-          onBack={() => navigate('/avatar-info')}
-          onAction={() => navigate('/face-scan')}
-          actionType="primary"
-        />
-      </div>
+      </div>        
+      <Footer
+        backText="Back"
+        actionText="Start Scanning"
+        onBack={() => navigate('/avatar-info')}
+        onAction={() => navigate('/face-scan')}
+        actionType="primary"
+      />
     </div>
   )
 }

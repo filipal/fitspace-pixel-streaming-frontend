@@ -101,12 +101,7 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
     window.addEventListener('pointerup', up)
   }
   // Slider row component
-  // Funkcije za skaliranje slider vrijednosti
-
-  function morphValueToSlider(value: number, min: number, max: number): number {
-    if (max === min) return 0
-    return clamp(((value - min) / (max - min)) * 100, 0, 100)
-  }
+  // Function to convert slider percentage into morph value
 
   function sliderToMorphValue(pct: number, min: number, max: number): number {
     return min + (pct / 100) * (max - min)
@@ -114,14 +109,14 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
 
 
   function SliderRow({ attr }: { attr: MorphAttribute }) {
-    // Always show thumb and value, initialize from attr.value
+    // Always show thumb and value, start centered at 50%
     const BAR_W = 170;
     const barRef = useRef<HTMLDivElement | null>(null);
-    const [val, setVal] = useState(() => morphValueToSlider(attr.value, attr.min, attr.max));
-    // If attr.value changes (category switch), reset slider
+    const [val, setVal] = useState(50);
+    // Reset slider to midpoint when attribute changes
     useEffect(() => {
-      setVal(morphValueToSlider(attr.value, attr.min, attr.max));
-    }, [attr.value, attr.min, attr.max]);
+      setVal(50);
+    }, [attr.morphId]);
     const onStart = (clientX: number) => {
       const bar = barRef.current;
       if (!bar) return;

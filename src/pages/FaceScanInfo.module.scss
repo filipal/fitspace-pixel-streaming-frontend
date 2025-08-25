@@ -1,8 +1,7 @@
 .faceScanInfoPage {
   position: relative;
-  width: var(--page-width);
-  max-width: var(--page-width);
-  min-height: var(--page-height);
+  width: 430px;
+  min-height: 932px;
   margin: 0 auto;
   font-family: 'Outfit', sans-serif;
   display: flex;
@@ -11,35 +10,43 @@
 }
 
 .faceScanContent {
-  padding: 55px 24px 0 24px;
-  flex: 1;
+  width: 430px;
+  height: 736px;
   display: flex;
   flex-direction: column;
-  gap: 32px;
   align-items: center;
-  justify-content: center;
+  justify-content: center; // centriraj tipsList vertikalno
+  flex-shrink: 0;
+  flex-grow: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.faceScanInfoPage .tipsList {
-  width: 100%;
-  max-width: 320px;
+.tipsList {
+  width: 320px;
+  height: 500px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  justify-content: space-between; // ravnomjerno rasporedi tipBoxove s razmakom
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-.faceScanInfoPage .tipBox {
-  width: 100%;
-  box-sizing: border-box;
+.tipBox {
+  width: 320px;
   background: #fff;
   border: 2px solid #000;
-  padding: 16px 20px;
   font-size: 18px;
   color: #222;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.13;
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
+  padding: 16px 16px;
+  // nema border-radius, nema margin
 }
