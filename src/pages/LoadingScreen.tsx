@@ -11,9 +11,11 @@ export default function LoadingScreen() {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval)
-          // Navigiraj na UnrealMeasurements kad je loading završen
+          // Navigate to UnrealMeasurements with Skin accordion expanded on the right
           setTimeout(() => {
-            navigate('/unreal-measurements')
+            navigate('/unreal-measurements', {
+              state: { openSkinRight: true },
+            })
           }, 500)
           return 100
         }

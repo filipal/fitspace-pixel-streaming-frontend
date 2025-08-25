@@ -1,5 +1,5 @@
-import { useState, type ComponentType, type SVGProps } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, type ComponentType, type SVGProps } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import Header from '../components/Header/Header'
 
 import avatarsButton from '../assets/avatars-button.png'
@@ -50,10 +50,22 @@ type NavKey = 'Body' | 'Face' | 'Skin' | 'Hair' | 'Extras' | 'Save'
 export default function UnrealMeasurements() {
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const [selectedControl, setSelectedControl] = useState<string | null>(null)
   const [selectedNav, setSelectedNav] = useState<NavKey | null>(null)
   const [avatarSrc] = useState<string>(avatarMeasure)
+
+  const openSkinRight = (
+    location.state as { openSkinRight?: boolean } | undefined
+  )?.openSkinRight
+
+  useEffect(() => {
+    if (openSkinRight) {
+      setSelectedNav('Skin')
+    }
+  }, [openSkinRight])
+
 
   const measurements: Measurement[] = [
     { name: 'Shoulder', value: 33.3, icon: lengthIcon },
@@ -159,7 +171,7 @@ export default function UnrealMeasurements() {
 
         {selectedNav === 'Skin' && (
           <div className={styles.accordion}>
-            <SkinAccordion />
+            <SkinAccordion defaultRightExpanded={openSkinRight} />
           </div>
         )}
 

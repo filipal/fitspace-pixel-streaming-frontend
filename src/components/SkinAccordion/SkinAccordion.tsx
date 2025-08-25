@@ -7,9 +7,15 @@ import Skin3 from '../../assets/skin3.svg?react'
 import { darkenHex, lightenHex } from '../../utils/color'
 import styles from './SkinAccordion.module.scss'
 
-export default function SkinAccordion() {
+interface SkinAccordionProps {
+  defaultRightExpanded?: boolean
+}
+
+export default function SkinAccordion({
+  defaultRightExpanded = false,
+}: SkinAccordionProps) {
   const [focusedIndex, setFocusedIndex] = useState<number | null>(null) // null => show two; number => show one
-  const [rightExpanded, setRightExpanded] = useState(false)
+  const [rightExpanded, setRightExpanded] = useState(defaultRightExpanded)
 
   const basePalette = ['#f5e0d0', '#eac3a6', '#d7a381', '#b47b57', '#8a573b', '#5d3b2a']
   const [baseIndex, setBaseIndex] = useState(2)
