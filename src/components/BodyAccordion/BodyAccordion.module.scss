@@ -197,3 +197,56 @@
   background: #000;
   border-radius: 2px;
 }
+
+@media (min-width: 1440px) {
+  .container {
+    width: 335px;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .left {
+    width: 335px;
+    height: 130px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: 20px;
+  }
+
+  .stack {
+    width: auto;
+    margin-top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .item {
+    max-width: none;
+  }
+
+  .right {
+    width: 335px;
+    height: calc(100% - 130px);
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .rightInner {
+    width: 315px;
+    height: calc(100% - 20px);
+  }
+
+  .vTrack {
+    height: calc(100% - 20px);
+  }
+
+  .vBar {
+    height: 100%;
+  }
+}
