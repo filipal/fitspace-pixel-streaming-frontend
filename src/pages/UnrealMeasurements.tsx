@@ -129,8 +129,8 @@ export default function UnrealMeasurements() {
         )}
       />
 
-      <div className={styles.centralWrapper}>
-        <div className={`${styles.avatarSection} ${selectedNav === 'Body' ? styles.bodySelected : ''} ${selectedNav === 'Face' ? styles.faceSelected : ''} ${selectedNav === 'Skin' ? styles.skinSelected : ''} ${selectedNav === 'Hair' ? styles.hairSelected : ''} ${selectedNav === 'Extras' ? styles.extrasSelected : ''}`}>
+      <div className={`${styles.centralWrapper} ${selectedNav ? styles.withAccordion : ''}`}>
+        <div className={`${styles.avatarSection} ${selectedNav ? styles.avatarShifted : ''} ${selectedNav === 'Body' ? styles.bodySelected : ''} ${selectedNav === 'Face' ? styles.faceSelected : ''} ${selectedNav === 'Skin' ? styles.skinSelected : ''} ${selectedNav === 'Hair' ? styles.hairSelected : ''} ${selectedNav === 'Extras' ? styles.extrasSelected : ''}`}>
           <img src={avatarImage} alt="Avatar" className={styles.avatarImage} />
 
           {/* Body measurements panel positioned separately */}
@@ -160,37 +160,36 @@ export default function UnrealMeasurements() {
             <DataPanel title="Body Measurements (cm)" measurements={measurements} />
           </div>
         )}
-
-        {selectedNav === 'Body' && (
-          <div className={styles.accordion}>
-            <BodyAccordion updateMorph={updateMorph} />
-          </div>
-        )}
-
-        {selectedNav === 'Face' && (
-          <div className={styles.accordion}>
-            <FaceAccordion />
-          </div>
-        )}
-
-        {selectedNav === 'Skin' && (
-          <div className={styles.accordion}>
-            <SkinAccordion defaultRightExpanded={openSkinRight} />
-          </div>
-        )}
-
-        {selectedNav === 'Hair' && (
-          <div className={styles.accordion}>
-            <HairAccordion />
-          </div>
-        )}
-
-        {selectedNav === 'Extras' && (
-          <div className={styles.accordion}>
-            <ExtrasAccordion />
-          </div>
-        )}
       </div>
+      {selectedNav === 'Body' && (
+        <div className={styles.accordion}>
+          <BodyAccordion updateMorph={updateMorph} />
+        </div>
+      )}
+
+      {selectedNav === 'Face' && (
+        <div className={styles.accordion}>
+          <FaceAccordion />
+        </div>
+      )}
+
+      {selectedNav === 'Skin' && (
+        <div className={styles.accordion}>
+          <SkinAccordion defaultRightExpanded={openSkinRight} />
+        </div>
+      )}
+
+      {selectedNav === 'Hair' && (
+        <div className={styles.accordion}>
+          <HairAccordion />
+        </div>
+      )}
+
+      {selectedNav === 'Extras' && (
+        <div className={styles.accordion}>
+          <ExtrasAccordion />
+        </div>
+      )}
 
       <div className={styles.bottomSection}>
         <div className={styles.bottomNav}>

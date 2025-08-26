@@ -296,9 +296,9 @@
 
 @media (min-width: 1440px) {
   .page {
-    width: 100%;          /* umjesto fiksnog width:1440px (opcija: zadrži ako želiš striktno) */
+    width: 100%;
     max-width: 1440px;
-    min-height: 1024px;
+    height: 1024px;
     align-items: flex-start;
     background: #B1B1B0;
     position: relative;
@@ -308,12 +308,17 @@
     flex-direction: row;
     align-items: flex-start;
     width: calc(100% - 90px);
-    /* min-height ostaje da može rasti s contentom */
-    min-height: calc(1024px - 70px);
-    justify-content: flex-start;
-    padding-left: 20px;
+    height: calc(100% - 70px);
+    justify-content: center;
+    padding-left: 0;
   }
-
+  .centralWrapper.withAccordion {
+    width: calc(100% - 90px - 335px);
+    justify-content: flex-start;
+  }
+  .avatarShifted {
+  margin-left: 123px;
+  }
   .avatarSection {
     width: 604px;
     height: 953px;
@@ -336,14 +341,18 @@
   .dataPanelWrapper {
     position: static;
     width: 273px;
-    height: 752px;
-    margin-left: 20px;
+    height: 774px;
+    margin-left: 15px;
+    margin-right: 22px;
+    margin-top: 62px;
   }
 
   .accordion {
     width: 335px;
-    height: 100%;
-    margin-left: 20px;
+    height: calc(100% - 70px);
+    position: absolute;
+    top: 70px;
+    right: 90px;
   }
 
   .bottomSection {
@@ -351,12 +360,10 @@
     top: 70px;
     right: 0;
     width: 90px;
-    /* height: calc(100% - 70px);  // uklonjeno da ne ovisi o eventualno limitiranom parentu */
-    min-height: calc(1024px - 70px);
+    height: calc(100% - 70px);
     border-top: none;
     border-left: 1px solid #000;
     margin-bottom: 0;
-    padding-top: 20px;
     justify-content: flex-start;
   }
 
@@ -366,12 +373,19 @@
 
   .bottomNav {
     width: 90px;
-    height: 639px;
+    height: 100%;
     flex-direction: column;
     margin-top: 0;
     align-items: center;
   }
-
+  .navIndicator {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: 5px;
+    height: 100%;
+  }
   .navButton {
     width: 90px;
     height: 90px;
