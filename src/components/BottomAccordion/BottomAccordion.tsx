@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import styles from './BottomAccordion.module.scss'
 import ArrowLeft from '../../assets/arrow-left.svg'
 import ArrowRight from '../../assets/arrow-right.svg'
@@ -13,13 +13,6 @@ const carouselItems: string[] = [BossDyn01, Pants1, Pants2, Pants3, Pants4, Pant
 
 export default function BottomAccordion() {
   const [index, setIndex] = useState(0)
-  const [isMobile, setIsMobile] = useState(() => window.innerWidth < 768)
-
-  useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
   const prev = () => setIndex(i => (i + carouselItems.length - 1) % carouselItems.length)
   const next = () => setIndex(i => (i + 1) % carouselItems.length)
   const len = carouselItems.length
@@ -32,13 +25,7 @@ export default function BottomAccordion() {
     <div className={styles.container}>
       <div className={styles.brandBar}>Pando Moto</div>
       <div className={styles.carouselRow}>
-        <button
-          type="button"
-          className={`${styles.arrowBtn} ${
-            isMobile ? styles.arrowVertical : styles.arrowHorizontal
-          }`}
-          onClick={prev}
-        >
+        <button type="button" className={styles.arrowBtn} onClick={prev}>
           <img src={ArrowLeft} alt="Prev" />
         </button>
         <div className={styles.carouselInner}>
@@ -52,13 +39,7 @@ export default function BottomAccordion() {
             <img src={Right} alt="Next" />
           </div>
         </div>
-        <button
-          type="button"
-          className={`${styles.arrowBtn} ${
-            isMobile ? styles.arrowVertical : styles.arrowHorizontal
-          }`}
-          onClick={next}
-        >
+        <button type="button" className={styles.arrowBtn} onClick={next}>
           <img src={ArrowRight} alt="Next" />
         </button>
       </div>
