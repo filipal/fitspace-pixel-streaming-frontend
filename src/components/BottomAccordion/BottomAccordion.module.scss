@@ -45,6 +45,9 @@
   cursor: pointer;
 }
 .arrowBtn img { width: 100%; height: 100%; object-fit: contain; }
+.arrowHorizontal img { transform: rotate(0deg); }
+.arrowVertical:first-of-type img { transform: rotate(-90deg); }
+.arrowVertical:last-of-type img { transform: rotate(90deg); }
 
 .carouselInner {
   width: 275px;
