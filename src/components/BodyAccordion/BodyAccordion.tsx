@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react'
 import ArrowRight from '../../assets/arrow-right.svg'
 import { morphAttributes } from '../../data/morphAttributes';
 import type { MorphAttribute } from '../../data/morphAttributes';
@@ -110,9 +110,12 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
 
   function SliderRow({ attr }: { attr: MorphAttribute }) {
     // Always show thumb and value, start centered at 50%
-    const BAR_W = 170;
     const barRef = useRef<HTMLDivElement | null>(null);
     const [val, setVal] = useState(50);
+    const [barWidth, setBarWidth] = useState(0);
+    useLayoutEffect(() => {
+      setBarWidth(barRef.current?.clientWidth ?? 0);
+    }, []);
     // Reset slider to midpoint when attribute changes
     useEffect(() => {
       setVal(50);
@@ -143,7 +146,7 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
       window.addEventListener('pointermove', move);
       window.addEventListener('pointerup', up);
     };
-    const leftPx = (val / 100) * BAR_W;
+    const leftPx = (val / 100) * barWidth;
     return (
       <div className={styles.row}>
         <div className={styles.rowLabel} title={attr.labelName}>{attr.labelName}</div>

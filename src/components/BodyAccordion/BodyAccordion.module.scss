@@ -325,6 +325,7 @@
     font-weight: 400;
     line-height: 14px;
     max-width: calc(100% - 35px - 35px);
+    text-align: center;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -340,24 +341,24 @@
   }
 
   .sliderBar {
-  position: relative;
-  width: 236px;
-  height: 10px;
-  border-radius: 10px;
+    width: 236px;
+    height: 10px;
   }
 
   .sliderThumb {
     top: 50%;
-    transform: translateY(-50%); /* prije: translate(-50%, -50%) sprječavalo 100% dosega */
+    transform: translate(-50%, -50%);
   }
 
   .rowPct {
-    margin: 0;
-    padding: 0;
+    position: relative;
+    top: 8px;              /* spušta tekst da baseline sjedne na dno sliderGroup */
+    margin-left: 10px;
     width: 26px;
     font-size: 10px;
     line-height: 14px;
-    align-self: right;
+    text-align: right;
+    padding: 0;
   }
 
   .vTrack { display: none; }
