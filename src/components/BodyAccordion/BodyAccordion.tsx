@@ -166,22 +166,34 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
 
   return (
     <div className={styles.container}>
-      {/* Left selector 80x171 */}
-      <div className={styles.left}>
-        <button type="button" className={`${styles.arrowBtn} ${styles.arrowUp}`} onClick={handleUp} aria-label="Previous">
-          <img src={ArrowRight} alt="Up" />
-        </button>
+      {/* Left selector */}
+      <div className={styles.leftSection}>
+        <div className={styles.left}>
+          <button
+            type="button"
+            className={`${styles.arrowBtn} ${styles.arrowUp}`}
+            onClick={handleUp}
+            aria-label="Previous"
+          >
+            <img src={ArrowRight} alt="Up" />
+          </button>
 
-        <div className={styles.stack}>
-          <div className={`${styles.item} ${styles.topSmall}`} title={at(-2).label}>{at(-2).label}</div>
-          <div className={`${styles.item} ${styles.upper}`} title={at(-1).label}>{at(-1).label}</div>
-          <div className={`${styles.item} ${styles.selected}`} title={at(0).label}>{at(0).label}</div>
-          <div className={`${styles.item} ${styles.lower}`} title={at(1).label}>{at(1).label}</div>
-          <div className={`${styles.item} ${styles.bottomSmall}`} title={at(2).label}>{at(2).label}</div>
+          <div className={styles.stack}>
+            <div className={`${styles.item} ${styles.topSmall}`} title={at(-2).label}>{at(-2).label}</div>
+            <div className={`${styles.item} ${styles.upper}`} title={at(-1).label}>{at(-1).label}</div>
+            <div className={`${styles.item} ${styles.selected}`} title={at(0).label}>{at(0).label}</div>
+            <div className={`${styles.item} ${styles.lower}`} title={at(1).label}>{at(1).label}</div>
+            <div className={`${styles.item} ${styles.bottomSmall}`} title={at(2).label}>{at(2).label}</div>
+          </div>
+          <button
+            type="button"
+            className={`${styles.arrowBtn} ${styles.arrowDown}`}
+            onClick={handleDown}
+            aria-label="Next"
+          >
+            <img src={ArrowRight} alt="Down" />
+          </button>
         </div>
-        <button type="button" className={`${styles.arrowBtn} ${styles.arrowDown}`} onClick={handleDown} aria-label="Next">
-          <img src={ArrowRight} alt="Down" />
-        </button>
       </div>
 
       {/* Right panel 350x171 (content depends on selected category) */}
