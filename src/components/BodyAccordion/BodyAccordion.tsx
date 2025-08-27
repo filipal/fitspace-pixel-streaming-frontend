@@ -200,7 +200,10 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
       </div>
 
       {/* Right panel 350x171 (content depends on selected category) */}
-      <div className={styles.right} onWheel={onWheel}>
+      <div
+        className={`${styles.right} ${maxScroll > 0 ? styles.scrollable : ''}`}
+        onWheel={onWheel}
+      >
         <div className={styles.rightInner}>
           <div className={styles.rows}>
             {view.map((attr, i) => (

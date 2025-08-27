@@ -362,9 +362,9 @@
   }
 
   .vTrack { display: none; }
-  .rightInner.scrollable .vTrack { display: flex; }
+  .right.scrollable .vTrack { display: flex; }
 
-  .rightInner.scrollable .vTrack {
+  .right.scrollable .vTrack {
     display: flex;
     position: absolute;
     top: 20px;
@@ -372,7 +372,7 @@
     height: calc(100% - 40px);
   }
 
-  .rightInner.scrollable .vBar,
-  .rightInner.scrollable .vFill { height: 100%; }
+  .right.scrollable .vBar,
+  .right.scrollable .vFill { height: 100%; }
 
 }
