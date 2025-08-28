@@ -46,60 +46,136 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
     () => morphAttributes.filter(attr => attr.category === selected.label),
     [selected.label]
   )
+  const rowsRef = useRef<HTMLDivElement | null>(null)
+  const trackRef = useRef<HTMLDivElement | null>(null)
+  const draggingRef = useRef(false)
+  const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n))
+
+  // Track viewport size to switch behavior at the desktop breakpoint
+  const [isLarge, setIsLarge] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 1440px)')
+    const handler = (e: MediaQueryListEvent) => setIsLarge(e.matches)
+    setIsLarge(mq.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  // ----- Mobile (default) list slicing logic -----
   const VISIBLE = 5
   const [scrollIndex, setScrollIndex] = useState(0)
   const total = list.length
   const visibleCount = Math.min(VISIBLE, total)
   const maxScroll = Math.max(0, total - VISIBLE)
-  const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n))
 
-  const draggingRef = useRef(false)
   const onWheel = (e: React.WheelEvent) => {
-    if (draggingRef.current) return // don't scroll list while dragging a slider
+    if (isLarge) return
+    if (draggingRef.current) return
     if (!maxScroll) return
     const dir = e.deltaY > 0 ? 1 : -1
     setScrollIndex((i) => clamp(i + dir, 0, maxScroll))
   }
 
-  // Reset/clamp scroll when category or list size changes
   useEffect(() => {
+    if (isLarge) return
     setScrollIndex(0)
-  }, [selected.label])
+  }, [selected.label, isLarge])
   useEffect(() => {
+    if (isLarge) return
     setScrollIndex((i) => clamp(i, 0, Math.max(0, (list.length || 0) - VISIBLE)))
-  }, [list.length])
+  }, [list.length, isLarge])
 
-  const view = list.slice(scrollIndex, scrollIndex + VISIBLE)
+  // ----- Desktop scroll tracking -----
+  const [scrollTop, setScrollTop] = useState(0)
+  const [clientH, setClientH] = useState(0)
+  const [scrollH, setScrollH] = useState(0)
+  const [trackH, setTrackH] = useState(0)
 
-  // vertical indicator position
-  const trackH = 130
-  const fillH = total > 0 ? (visibleCount / total) * trackH : 0
-  const fillTop = total > visibleCount && maxScroll > 0
-    ? (scrollIndex / maxScroll) * (trackH - fillH)
-    : 0
+  const updateMetrics = () => {
+    const el = rowsRef.current
+    const track = trackRef.current
+    if (el) {
+      setClientH(el.clientHeight)
+      setScrollH(el.scrollHeight)
+      setScrollTop(el.scrollTop)
+    }
+    if (track) setTrackH(track.clientHeight)
+  }
 
-  const trackRef = useRef<HTMLDivElement | null>(null)
+  useLayoutEffect(() => {
+    if (!isLarge) return
+    updateMetrics()
+    window.addEventListener('resize', updateMetrics)
+    return () => window.removeEventListener('resize', updateMetrics)
+  }, [isLarge, list.length])
+
+  const onScroll = () => {
+    if (!isLarge) return
+    const el = rowsRef.current
+    if (!el) return
+    setScrollTop(el.scrollTop)
+  }
+
   const onTrackStart = (clientY: number) => {
-    if (!maxScroll) return
     const track = trackRef.current
     if (!track) return
     const rect = track.getBoundingClientRect()
     draggingRef.current = true
-    const update = (y: number) => {
-      const rel = y - rect.top
-      const pct = clamp(rel / trackH, 0, 1)
-      setScrollIndex(Math.round(pct * maxScroll))
+
+    if (isLarge) {
+      const el = rowsRef.current
+      if (!el || scrollH <= clientH) return
+      const update = (y: number) => {
+        const rel = y - rect.top
+        const pct = clamp(rel / trackH, 0, 1)
+        const newTop = pct * (scrollH - clientH)
+        el.scrollTop = newTop
+        setScrollTop(newTop)
+      }
+      update(clientY)
+      const move = (e: PointerEvent) => update(e.clientY)
+      const up = () => {
+        window.removeEventListener('pointermove', move)
+        window.removeEventListener('pointerup', up)
+        draggingRef.current = false
+      }
+      window.addEventListener('pointermove', move)
+      window.addEventListener('pointerup', up)
+    } else {
+      if (!maxScroll) return
+      const update = (y: number) => {
+        const rel = y - rect.top
+        const pct = clamp(rel / 130, 0, 1)
+        setScrollIndex(Math.round(pct * maxScroll))
+      }
+      update(clientY)
+      const move = (e: PointerEvent) => update(e.clientY)
+      const up = () => {
+        window.removeEventListener('pointermove', move)
+        window.removeEventListener('pointerup', up)
+        draggingRef.current = false
+      }
+      window.addEventListener('pointermove', move)
+      window.addEventListener('pointerup', up)
     }
-    update(clientY)
-    const move = (e: PointerEvent) => update(e.clientY)
-    const up = () => {
-      window.removeEventListener('pointermove', move)
-      window.removeEventListener('pointerup', up)
-      draggingRef.current = false
-    }
-    window.addEventListener('pointermove', move)
-    window.addEventListener('pointerup', up)
   }
+
+  const scrollable = isLarge && scrollH > clientH
+  let fillH = 0
+  let fillTop = 0
+  if (isLarge) {
+    fillH = scrollable && trackH > 0 ? (clientH / scrollH) * trackH : trackH
+    fillTop = scrollable && trackH > 0
+      ? (scrollTop / (scrollH - clientH)) * (trackH - fillH)
+      : 0
+  } else {
+    const trackSmall = 130
+    fillH = total > 0 ? (visibleCount / total) * trackSmall : 0
+    fillTop = total > visibleCount && maxScroll > 0
+      ? (scrollIndex / maxScroll) * (trackSmall - fillH)
+      : 0
+  }
+  const view = isLarge ? list : list.slice(scrollIndex, scrollIndex + VISIBLE)
   // Slider row component
   // Function to convert slider percentage into morph value
 
@@ -177,7 +253,7 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
             className={`${styles.arrowBtn} ${styles.arrowUp}`}
             onClick={handleUp}
             aria-label="Previous"
-          >
+         >
             <img src={ArrowRight} alt="Up" />
           </button>
 
@@ -201,11 +277,15 @@ export default function BodyAccordion({ updateMorph }: BodyAccordionProps) {
 
       {/* Right panel 350x171 (content depends on selected category) */}
       <div
-        className={`${styles.right} ${maxScroll > 0 ? styles.scrollable : ''}`}
-        onWheel={onWheel}
+        className={`${styles.right} ${scrollable ? styles.scrollable : ''}`}
+        onWheel={isLarge ? undefined : onWheel}
       >
         <div className={styles.rightInner}>
-          <div className={styles.rows}>
+          <div
+            className={styles.rows}
+            ref={rowsRef}
+            onScroll={isLarge ? onScroll : undefined}
+          >
             {view.map((attr, i) => (
               <SliderRow key={`${attr.morphId}-${i}`} attr={attr} />
             ))}
