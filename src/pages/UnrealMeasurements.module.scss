@@ -157,18 +157,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   transition: all 0.2s ease;
-  color: #000;
+  color: #FFFFFF;
+}
+.controlButton svg {
+  display: block;
+}
+.controlButton svg .outerHalo {
+  transition: fill .2s ease;
 }
 
+.controlButton.selected svg .outerHalo {
+  fill: #000;
+  fill-opacity: 1; 
+}
+.controlButton svg .whiteRing {
+  shape-rendering: geometricPrecision;
+}
 .controlIcon {
   width: 100%;
   height: 100%;
   object-fit: contain;
 }
-
-.controlButton.selected { color: #000; }
+.controlButton .outerCircle {
+  display: none;  // ili potpuno obriši markup + ovaj blok
+}
+.controlButton.selected { color: #FFFFFF; }
 
 .controlIcon { position: relative; z-index: 2; }
 .outerCircle {
