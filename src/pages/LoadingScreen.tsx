@@ -11,11 +11,9 @@ export default function LoadingScreen() {
       setProgress(prev => {
         if (prev >= 100) {
           clearInterval(interval)
-          // Navigate to UnrealMeasurements with Skin accordion expanded on the right
+          // Navigate to UnrealMeasurements with no accordion pre-selected
           setTimeout(() => {
-            navigate('/unreal-measurements', {
-              state: { openSkinRight: true },
-            })
+            navigate('/unreal-measurements')
           }, 500)
           return 100
         }
